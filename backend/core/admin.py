@@ -5,3 +5,10 @@ from . import models
 @admin.register(models.CustomUser)
 class UserAdmin(admin.ModelAdmin):
     pass
+
+
+admin.site.register(models.Product)
+admin.site.register(models.Order)
+admin.site.register(models.OrderItem)
+admin.site.register(models.Coupon)
+admin.site.register(models.Review)

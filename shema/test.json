@@ -1,0 +1,403 @@
+[
+      {
+      "model": "core.product",
+      "pk": 1,
+      "fields": {
+        "name": "Samsung Galaxy S21",
+        "description": "A high-end smartphone with a 6.2-inch display and 8GB of RAM.",
+        "price": 999.99,
+        "quantity": 50,
+        "manufacturer": "Samsung",
+        "category": "Electronics"
+      }
+    },
+    {
+      "model": "core.product",
+      "pk": 2,
+      "fields": {
+        "name": "Apple MacBook Pro",
+        "description": "A powerful laptop with a 13-inch Retina display and 16GB of RAM.",
+        "price": 1499.99,
+        "quantity": 25,
+        "manufacturer": "Apple",
+        "category": "Computers"
+      }
+    },
+    {
+      "model": "core.product",
+      "pk": 3,
+      "fields": {
+        "name": "Sony WH-1000XM4",
+        "description": "Noise-cancelling headphones with Alexa voice control and up to 30 hours of battery life.",
+        "price": 349.99,
+        "quantity": 75,
+        "manufacturer": "Sony",
+        "category": "Electronics"
+      }
+    },
+    {
+      "model": "core.product",
+      "pk": 4,
+      "fields": {
+        "name": "Dell UltraSharp U2720Q",
+        "description": "A 27-inch 4K monitor with a USB-C hub and built-in KVM switch.",
+        "price": 649.99,
+        "quantity": 15,
+        "manufacturer": "Dell",
+        "category": "Computers"
+      }
+    },
+    {
+      "model": "core.product",
+      "pk": 5,
+      "fields": {
+        "name": "Fitbit Versa 3",
+        "description": "A smartwatch with GPS, heart rate tracking, and over 20 exercise modes.",
+        "price": 229.95,
+        "quantity": 100,
+        "manufacturer": "Fitbit",
+        "category": "Fitness"
+      }
+    },
+    {
+      "model": "core.product",
+      "pk": 6,
+      "fields": {
+        "name": "Amazon Echo Dot",
+        "description": "A smart speaker with Alexa voice control and 360-degree sound.",
+        "price": 49.99,
+        "quantity": 200,
+        "manufacturer": "Amazon",
+        "category": "Smart Home"
+      }
+    },
+    {
+      "model": "core.product",
+      "pk": 7,
+      "fields": {
+        "name": "LG CX Series OLED TV",
+        "description": "A 55-inch 4K TV with HDR, Dolby Vision, and webOS smart platform.",
+        "price": 1699.99,
+        "quantity": 10,
+        "manufacturer": "LG",
+        "category": "TVs"
+      }
+    },
+    {
+      "model": "core.product",
+      "pk": 8,
+      "fields": {
+        "name": "Logitech MX Master 3",
+        "description": "A wireless mouse with a customizable thumb button and up to 70 days of battery life.",
+        "price": 99.99,
+        "quantity": 50,
+        "manufacturer": "Logitech",
+        "category": "Computers"
+      }
+    },
+    {
+        "model": "core.product",
+        "pk": 9,
+        "fields": {
+            "name": "Apple iPhone 12",
+            "description": "6.1-inch Super Retina XDR display. Ceramic Shield with 4x better drop performance. Incredible low-light photography with Night mode on all cameras. Cinema-grade Dolby Vision video recording, editing, and playback. Powerful A14 Bionic chip. 5G capable. And new MagSafe accessories for easy attach and faster wireless charging. Let the fun begin.",
+            "price": 799.99,
+            "quantity": 50,
+            "manufacturer": "Apple",
+            "category": "Smartphones"
+        }
+    },
+    {
+        "model": "core.product",
+        "pk": 10,
+        "fields": {
+            "name": "Samsung Galaxy S21",
+            "description": "Introducing the Samsung Galaxy S21 5G, the ultimate flagship smartphone that's built to help you take on the everyday. With 5G connectivity speeds, you can stay connected and stream your favourite shows, download your favourite music, and so much more with ultra-fast speed. The Galaxy S21 also features a 6.2-inch AMOLED screen, a powerful Exynos processor, and a triple-camera setup that will help you take stunning photos and videos.",
+            "price": 999.99,
+            "quantity": 75,
+            "manufacturer": "Samsung",
+            "category": "Smartphones"
+        }
+    },
+    {
+      "model": "core.order",
+      "pk": 1,
+      "fields": {
+          "user": 1,
+          "product": 10,
+          "order_date": "2022-03-01",
+          "status": "Оплачен",
+          "delivery_address": "123 Main St, Anytown USA",
+          "total_price": "899.99"
+      }
+    },
+    {
+      "model": "core.order",
+      "pk": 2,
+      "fields": {
+          "user": 1,
+          "product": 1,
+          "order_date": "2022-03-09",
+          "status": "Оплачен",
+          "delivery_address": "ул. Ленина 10",
+          "total_price": 1500.00
+          }
+      },
+      {
+        "model": "core.order",
+        "pk": 3,
+        "fields": {
+          "user": 2,
+          "product": 3,
+          "order_date": "2022-03-08",
+          "status": "Не оплачен",
+          "delivery_address": "ул. Пушкина 15",
+          "total_price": 3200.00
+        }
+      },
+      {
+        "model": "core.order",
+        "pk": 4,
+        "fields": {
+            "user": 1,
+            "product": 2,
+            "order_date": "2022-03-07",
+            "status": "Оплачен",
+            "delivery_address": "ул. Московская 50",
+            "total_price": 2500.00
+        }
+      },
+      {
+        "model": "core.order",
+        "pk": 5,
+        "fields": {
+          "user": 3,
+          "product": 4,
+          "order_date": "2022-03-06",
+          "status": "Не оплачен",
+          "delivery_address": "ул. Кирова 2",
+          "total_price": 4000.00
+        }
+      },
+      {
+        "model": "core.order",
+        "pk": 6,
+        "fields": {
+          "user": 4,
+          "product": 6,
+          "order_date": "2022-03-05",
+          "status": "Оплачен",
+          "delivery_address": "ул. Сталина 8",
+          "total_price": 900.00
+        }
+      },
+      {
+        "model": "core.order",
+        "pk": 7,
+        "fields": {
+          "user": 2,
+          "product": 5,
+          "order_date": "2022-03-04",
+          "status": "Оплачен",
+          "delivery_address": "ул. Ленина 25",
+          "total_price": 1700.00
+        }
+      },
+      {
+        "model": "core.order",
+        "pk": 8,
+        "fields": {
+          "user": 1,
+          "product": 8,
+          "order_date": "2022-03-03",
+          "status": "Не оплачен",
+          "delivery_address": "ул. Ленина 10",
+          "total_price": 2200.00
+        }
+      },
+    {
+      "model": "core.order",
+      "pk": 9,
+      "fields": {
+        "user": 1,
+        "product": 10,
+        "order_date": "2022-03-02",
+        "status": "Оплачен",
+        "delivery_address": "ул. Московская 50",
+        "total_price": 1100.00
+      }
+    },
+    {
+      "model": "core.orderitem",
+      "pk": 1,
+      "fields": {
+        "order": 1,
+        "product": 1,
+        "quantity": 1,
+        "unit_price": "899.99"
+      }
+    },
+    {
+      "model": "core.orderitem",
+      "pk": 1,
+      "fields":
+      {
+        "order": 1,
+        "product": 1,
+        "quantity": 2,
+        "unit_price": 399.99
+      }
+    },
+    {
+      "model": "core.orderitem",
+      "pk": 1,
+      "fields":
+      {
+        "order": 1,
+        "product": 2,
+        "quantity": 1,
+        "unit_price": 799.99
+      }
+    },
+    {
+      "model": "core.orderitem",
+      "pk": 1,
+      "fields":{
+        "order": 2,
+        "product": 3,
+        "quantity": 4,
+        "unit_price": 59.99
+      }
+    },
+    {
+      "model": "core.orderitem",
+      "pk": 1,
+      "fields":{
+        "order": 2,
+        "product": 4,
+        "quantity": 1,
+        "unit_price": 249.99
+      }
+    },
+    {
+      "model": "core.orderitem",
+      "pk": 1,
+      "fields":{
+        "order": 3,
+        "product": 5,
+        "quantity": 2,
+        "unit_price": 149.99
+      }
+    },
+    {
+      "model": "core.orderitem",
+      "pk": 1,
+      "fields":{
+        "order": 3,
+        "product": 6,
+        "quantity": 1,
+        "unit_price": 599.99
+      }},
+    {
+      "model": "core.orderitem",
+      "pk": 1,
+      "fields":{
+        "order": 4,
+        "product": 7,
+        "quantity": 3,
+        "unit_price": 29.99
+      }
+    },{
+      "model": "core.orderitem",
+      "pk": 1,
+      "fields":{
+        "order": 4,
+        "product": 8,
+        "quantity": 2,
+        "unit_price": 99.99
+      }
+    },
+    {
+      "model": "core.orderitem",
+      "pk": 1,
+      "fields":{
+        "order": 5,
+        "product": 9,
+        "quantity": 1,
+        "unit_price": 199.99
+      }
+    },{
+      "model": "core.orderitem",
+      "pk": 1,
+      "fields":{
+        "order": 5,
+        "product": 10,
+        "quantity": 1,
+        "unit_price": 799.99
+      }
+    },
+    {
+      "model": "core.coupon",
+      "pk": 1,
+      "fields": {
+        "code": "SPRING20",
+        "discount": "20.00",
+        "expiration_date": "2022-06-01T00:00:00Z"
+      }
+    },
+    {
+        "model": "core.review",
+        "pk": 1,
+        "fields": {
+            "user": 1,
+            "product": 3,
+            "rating": 5,
+            "comment": "I love this product! It exceeded my expectations.",
+            "created_at": "2022-02-15T08:30:00Z"
+        }
+    },
+    {
+        "model": "core.review",
+        "pk": 2,
+        "fields": {
+            "user": 2,
+            "product": 5,
+            "rating": 3,
+            "comment": "The product is okay, but it's not really worth the price.",
+            "created_at": "2022-02-16T11:15:00Z"
+        }
+    },
+    {
+        "model": "core.review",
+        "pk": 3,
+        "fields": {
+            "user": 3,
+            "product": 1,
+            "rating": 4,
+            "comment": "The product is good, but there are a few things that could be improved.",
+            "created_at": "2022-02-18T16:45:00Z"
+        }
+    },
+    {
+        "model": "core.review",
+        "pk": 4,
+        "fields": {
+            "user": 4,
+            "product": 2,
+            "rating": 2,
+            "comment": "I was really disappointed with this product. It didn't work as advertised.",
+            "created_at": "2022-02-19T09:00:00Z"
+        }
+    },
+    {
+        "model": "core.review",
+        "pk": 5,
+        "fields": {
+            "user": 5,
+            "product": 4,
+            "rating": 1,
+            "comment": "This is the worst product I've ever bought. It's a complete waste of money.",
+            "created_at": "2022-02-20T14:30:00Z"
+        }
+    }
+]
