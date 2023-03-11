@@ -5,6 +5,10 @@ from django.utils.translation import gettext_lazy as _
 from . import managers
 
 
+def upload_to_uPhoto(instance, filename):
+    return 'images/users/{filename}'.format(filename=filename)
+
+
 class CustomUser(AbstractUser):
     username = None
     email = models.EmailField(_('email address'), unique=True)
@@ -20,7 +24,7 @@ class CustomUser(AbstractUser):
     birth_date = models.DateField(null=True, blank=True)
     pro = models.BooleanField(default=False)
     phone = models.TextField(null=True, unique=True)
-
+    photo = models.ImageField(upload_to=upload_to_uPhoto, blank=True, null=True)
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
@@ -30,13 +34,18 @@ class CustomUser(AbstractUser):
         return f"{self.email}'s custom account"
 
 
+def upload_to_catalog(instance, filename):
+    return 'images/catalog/{filename}'.format(filename=filename)
+
+
 class Product(models.Model):
-    name = models.CharField(max_length=255)
+    brand = models.CharField(max_length=20)
+    model = models.CharField(max_length=100)
     description = models.TextField(blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     quantity = models.IntegerField()
-    manufacturer = models.CharField(max_length=255)
     category = models.CharField(max_length=255)
+    photo = models.ImageField(upload_to=upload_to_catalog, blank=True, null=True)
 
 
 class Order(models.Model):
