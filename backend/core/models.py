@@ -31,11 +31,15 @@ class CustomUser(AbstractUser):
     objects = managers.CustomUserManager()
 
     def __str__(self):
-        return f"{self.email}'s custom account"
+        return self.email
 
 
 def upload_to_catalog(instance, filename):
     return 'images/catalog/{filename}'.format(filename=filename)
+
+
+class Category(models.Model):
+    name = models.CharField(max_length=15)
 
 
 class Product(models.Model):
@@ -44,7 +48,7 @@ class Product(models.Model):
     description = models.TextField(blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     quantity = models.IntegerField()
-    category = models.CharField(max_length=255)
+    category = models.ForeignKey(Category, related_name="products", on_delete=models.CASCADE)
     photo = models.ImageField(upload_to=upload_to_catalog, blank=True, null=True)
 
 
@@ -54,8 +58,8 @@ class Order(models.Model):
     order_date = models.DateField()
     status = models.CharField(
         default='Не оплачен',
-        max_length=140,
         null=False,
+        max_length=15,
         choices=(
             ('Не оплачен', 'Не оплачен'),
             ('Оплачен', 'Оплачен'),
@@ -76,6 +80,7 @@ class Coupon(models.Model):
     code = models.CharField(max_length=255, unique=True)
     discount = models.DecimalField(max_digits=5, decimal_places=2)
     expiration_date = models.DateTimeField()
+    category = models.ForeignKey(Category, related_name="coupons", on_delete=models.CASCADE)
 
 
 class Review(models.Model):
