@@ -10,7 +10,6 @@ class CustomUserSerializer(serializers.ModelSerializer):
     `required=False`, but can be configured as needed. This serializer is used
     in `accounts.viewsets.CustomUserModelViewSet`.
     """
-
     email = serializers.CharField(
         write_only=True, validators=[validators.UniqueValidator(
             message='This email already exists',
@@ -40,6 +39,33 @@ class CustomUserRetrieveSerializer(serializers.ModelSerializer):
     bio = serializers.CharField(required=False)
     gender = serializers.CharField(required=False)
 
+    class Meta:
+        model = CustomUser
+        fields = ('first_name', 'last_name', 'email',
+                  'bio', 'gender', 'birth_date', 'id')
+
+
+class OrderSerialazer(serializers.ModelSerializer):
+    pass
+
+
+class ProductSerailazer(serializers.ModelSerializer):
+    pass
+
+
+class CategorySerialazer(serializers.ModelSerializer):
+    pass
+
+
+class OrderItemSerialazer(serializers.ModelSerializer):
+    pass
+
+
+class UserStaistik(serializers.ModelSerializer):
+    birth_date = serializers.CharField(required=False)
+    bio = serializers.CharField(required=False)
+    gender = serializers.CharField(required=False)
+    statistic = OrderSerialazer(many=True)
     class Meta:
         model = CustomUser
         fields = ('first_name', 'last_name', 'email',

@@ -53,7 +53,6 @@ class Product(models.Model):
 
 
 class Order(models.Model):
-    user = models.ForeignKey(CustomUser, related_name='users', on_delete=models.CASCADE)
     product = models.ForeignKey(Product, related_name='products', on_delete=models.CASCADE)
     order_date = models.DateField()
     status = models.CharField(
@@ -70,6 +69,7 @@ class Order(models.Model):
 
 
 class OrderItem(models.Model):
+    user = models.ForeignKey(CustomUser, related_name='statistic', on_delete=models.CASCADE)
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField()
