@@ -1,6 +1,8 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers, validators
 
+from .models import Category, Product, Order, OrderItem, Coupon, Review
+
 CustomUser = get_user_model()
 
 
@@ -45,28 +47,34 @@ class CustomUserRetrieveSerializer(serializers.ModelSerializer):
                   'bio', 'gender', 'birth_date', 'id')
 
 
-class OrderSerialazer(serializers.ModelSerializer):
-    pass
+class ProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = '__all__'
 
 
-class ProductSerailazer(serializers.ModelSerializer):
-    pass
+class OrderSerializer(serializers.ModelSerializer):
+    products = ProductSerializer(many=True)
+
+    class Meta:
+        model = Order
+        fields = ('id', 'products', 'order_date', 'status', 'delivery_address', 'total_price')
 
 
-class CategorySerialazer(serializers.ModelSerializer):
-    pass
+class CategorySerializer(serializers.ModelSerializer):
+    products = ProductSerializer(many=True)
+
+    class Meta:
+        model = Category
+        fields = ('id', 'name', 'products')
 
 
-class OrderItemSerialazer(serializers.ModelSerializer):
-    pass
-
-
-class UserStaistik(serializers.ModelSerializer):
+class UserStatisticSerializer(serializers.ModelSerializer):
     birth_date = serializers.CharField(required=False)
     bio = serializers.CharField(required=False)
     gender = serializers.CharField(required=False)
-    statistic = OrderSerialazer(many=True)
+
     class Meta:
         model = CustomUser
-        fields = ('first_name', 'last_name', 'email',
-                  'bio', 'gender', 'birth_date', 'id')
+        fields = ('id', 'first_name', 'last_name', 'email',
+                  'bio', 'gender', 'birth_date')

@@ -53,6 +53,7 @@ class Product(models.Model):
 
 
 class Order(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, related_name='products', on_delete=models.CASCADE)
     order_date = models.DateField()
     status = models.CharField(
@@ -65,15 +66,13 @@ class Order(models.Model):
         )
     )
     delivery_address = models.CharField(max_length=100)
+    total_quantity = models.IntegerField()
     total_price = models.DecimalField(max_digits=10, decimal_places=2, null=False)
 
 
-class OrderItem(models.Model):
-    user = models.ForeignKey(CustomUser, related_name='statistic', on_delete=models.CASCADE)
-    order = models.ForeignKey(Order, on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    quantity = models.IntegerField()
-    unit_price = models.DecimalField(max_digits=10, decimal_places=2)
+class ProductOrder(models.Model):
+    products = models.ForeignKey(Product, related_name='products', on_delete=models.CASCADE)
+    orders = models.ForeignKey(Order, related_name='orders', on_delete=models.CASCADE)
 
 
 class Coupon(models.Model):
