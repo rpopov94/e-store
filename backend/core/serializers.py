@@ -58,6 +58,13 @@ class BrandSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Brand
+        fields = ('id', 'name', 'products')
+
+
+class BrandListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Brand
+        fields = ('id', 'name')
 
 
 class CouponSerializer(serializers.ModelSerializer):
@@ -73,14 +80,18 @@ class ReviewSerializer(serializers.ModelSerializer):
 
 
 class OrderSerializer(serializers.ModelSerializer):
-    products = ProductSerializer(many=True)
-
     class Meta:
         model = Order
-        fields = ('id', 'order_date', 'status', 'delivery_address', 'total_price', 'products')
+        fields = '__all__'
 
 
 class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = '__all__'
+
+
+class CategorySerializerAll(serializers.ModelSerializer):
     products = ProductSerializer(many=True)
     coupons = CouponSerializer(many=True)
 
