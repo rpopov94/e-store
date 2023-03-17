@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers, validators
 
-from .models import Category, Product, Order, OrderItem, Coupon, Review
+from .models import Category, Product, Order, Coupon, Review, Brand
 
 CustomUser = get_user_model()
 
@@ -53,28 +53,54 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class BrandSerializer(serializers.ModelSerializer):
+    products = ProductSerializer(many=True)
+
+    class Meta:
+        model = Brand
+
+
+class CouponSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Coupon
+        fields = '__all__'
+
+
+class ReviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Review
+        fields = '__all__'
+
+
 class OrderSerializer(serializers.ModelSerializer):
     products = ProductSerializer(many=True)
 
     class Meta:
         model = Order
-        fields = ('id', 'products', 'order_date', 'status', 'delivery_address', 'total_price')
+        fields = ('id', 'order_date', 'status', 'delivery_address', 'total_price', 'products')
 
 
 class CategorySerializer(serializers.ModelSerializer):
     products = ProductSerializer(many=True)
+    coupons = CouponSerializer(many=True)
 
     class Meta:
         model = Category
-        fields = ('id', 'name', 'products')
+        fields = ('id', 'name', 'products', 'coupons')
 
 
-class UserStatisticSerializer(serializers.ModelSerializer):
+class OrdersOfUserSerializer(serializers.ModelSerializer):
+    last_name = serializers.CharField(required=False)
+    first_name = serializers.CharField(required=False)
+    email = serializers.CharField(
+        write_only=True, validators=[validators.UniqueValidator(
+            message='This email already exists',
+            queryset=CustomUser.objects.all()
+        )]
+    )
     birth_date = serializers.CharField(required=False)
-    bio = serializers.CharField(required=False)
-    gender = serializers.CharField(required=False)
+    orders = OrderSerializer(many=True)
 
     class Meta:
         model = CustomUser
-        fields = ('id', 'first_name', 'last_name', 'email',
-                  'bio', 'gender', 'birth_date')
+        fields = ('id', 'first_name', 'last_name', 'email', 'orders')

@@ -41,28 +41,51 @@ def upload_to_catalog(instance, filename):
 class Category(models.Model):
     name = models.CharField(max_length=15)
 
+    def __str__(self):
+        return self.name
+
+
+class Brand(models.Model):
+    name = models.CharField(max_length=15)
+
+    def __str__(self):
+        return self.name
+
 
 class Product(models.Model):
-    brand = models.CharField(max_length=20)
+    brand = models.ForeignKey(Brand, related_name='products', on_delete=models.DO_NOTHING)
     model = models.CharField(max_length=100)
     description = models.TextField(blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     quantity = models.IntegerField()
-    category = models.ForeignKey(Category, related_name="products", on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, related_name="products", on_delete=models.DO_NOTHING)
     photo = models.ImageField(upload_to=upload_to_catalog, blank=True, null=True)
+
+    def __str__(self):
+        return self.model
 
 
 class Order(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, related_name='products', on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, related_name='orders', on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, related_name='orders', on_delete=models.CASCADE)
     order_date = models.DateField()
-    status = models.CharField(
+    pay_status = models.CharField(
         default='Не оплачен',
         null=False,
         max_length=15,
         choices=(
             ('Не оплачен', 'Не оплачен'),
             ('Оплачен', 'Оплачен'),
+        )
+    )
+    delivery_satus = models.CharField(
+        default='Обрабатывается',
+        null=False,
+        max_length=15,
+        choices=(
+            ('Обрабатывается', 'Обрабатывается'),
+            ('В доставке', 'В доставке'),
+            ('Доставлен', 'Доставлен'),
         )
     )
     delivery_address = models.CharField(max_length=100)
@@ -83,8 +106,8 @@ class Coupon(models.Model):
 
 
 class Review(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, related_name='reviews', on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, related_name='reviews', on_delete=models.CASCADE)
     rating = models.IntegerField(
         choices=((1, '1 Star'), (2, '2 Stars'), (3, '3 Stars'), (4, '4 Stars'), (5, '5 Stars')))
     comment = models.TextField(blank=True)
