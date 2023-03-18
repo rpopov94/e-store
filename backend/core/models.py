@@ -41,6 +41,10 @@ def upload_to_catalog(instance, filename):
 class Category(models.Model):
     name = models.CharField(max_length=15)
 
+    class Meta:
+        verbose_name = 'category'
+        verbose_name_plural = 'categories'
+
     def __str__(self):
         return self.name
 
@@ -67,7 +71,7 @@ class Product(models.Model):
 
 class Order(models.Model):
     user = models.ForeignKey(CustomUser, related_name='orders', on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, related_name='orders', on_delete=models.CASCADE)
+    products = models.ManyToManyField(Product, through='ProductOrder')
     order_date = models.DateField()
     pay_status = models.CharField(
         default='Не оплачен',
@@ -78,6 +82,15 @@ class Order(models.Model):
             ('Оплачен', 'Оплачен'),
         )
     )
+    total_price = models.DecimalField(max_digits=10, decimal_places=2, null=False)
+
+    def __str__(self):
+        return f'order #{self.pk} - {self.order_date}'
+
+
+class ProductOrder(models.Model):
+    product = models.ForeignKey(Product, related_name='product_orders', on_delete=models.CASCADE)
+    order = models.ForeignKey(Order, related_name='product_orders', on_delete=models.CASCADE)
     delivery_satus = models.CharField(
         default='Обрабатывается',
         null=False,
@@ -91,11 +104,6 @@ class Order(models.Model):
     delivery_address = models.CharField(max_length=100)
     total_quantity = models.IntegerField()
     total_price = models.DecimalField(max_digits=10, decimal_places=2, null=False)
-
-
-class ProductOrder(models.Model):
-    products = models.ForeignKey(Product, related_name='products', on_delete=models.CASCADE)
-    orders = models.ForeignKey(Order, related_name='orders', on_delete=models.CASCADE)
 
 
 class Coupon(models.Model):

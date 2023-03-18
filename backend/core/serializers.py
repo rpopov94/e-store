@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers, validators
 
-from .models import Category, Product, Order, Coupon, Review, Brand
+from .models import Category, Product, Order, Coupon, Review, Brand, ProductOrder
 
 CustomUser = get_user_model()
 
@@ -28,8 +28,15 @@ class CustomUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = ('first_name', 'last_name', 'email',
-                  'password', 'bio', 'gender', 'birth_date')
+        fields = (
+            'first_name',
+            'last_name',
+            'email',
+            'password',
+            'bio',
+            'gender',
+            'birth_date'
+        )
 
 
 class CustomUserRetrieveSerializer(serializers.ModelSerializer):
@@ -43,11 +50,20 @@ class CustomUserRetrieveSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = ('first_name', 'last_name', 'email',
-                  'bio', 'gender', 'birth_date', 'id')
+        fields = (
+            'first_name',
+            'last_name',
+            'email',
+            'bio',
+            'gender',
+            'birth_date',
+            'id'
+        )
 
 
 class ProductSerializer(serializers.ModelSerializer):
+    brand = serializers.StringRelatedField()
+
     class Meta:
         model = Product
         fields = '__all__'
@@ -58,13 +74,20 @@ class BrandSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Brand
-        fields = ('id', 'name', 'products')
+        fields = (
+            'id',
+            'name',
+            'products'
+        )
 
 
 class BrandListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Brand
-        fields = ('id', 'name')
+        fields = (
+            'id',
+            'name'
+        )
 
 
 class CouponSerializer(serializers.ModelSerializer):
@@ -79,10 +102,32 @@ class ReviewSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class ProductOrderSerializer(serializers.ModelSerializer):
+    product = ProductSerializer()
+
+    class Meta:
+        model = ProductOrder
+        fields = (
+            'delivery_satus',
+            'delivery_address',
+            'total_quantity',
+            'total_price',
+            'product',
+        )
+
+
 class OrderSerializer(serializers.ModelSerializer):
+    user = serializers.StringRelatedField()
+    product_orders = ProductOrderSerializer(many=True)
+
     class Meta:
         model = Order
-        fields = '__all__'
+        fields = (
+            'id',
+            'user',
+            'order_date',
+            'product_orders',
+        )
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -97,7 +142,12 @@ class CategorySerializerAll(serializers.ModelSerializer):
 
     class Meta:
         model = Category
-        fields = ('id', 'name', 'products', 'coupons')
+        fields = (
+            'id',
+            'name',
+            'products',
+            'coupons'
+        )
 
 
 class OrdersOfUserSerializer(serializers.ModelSerializer):
@@ -114,4 +164,10 @@ class OrdersOfUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = ('id', 'first_name', 'last_name', 'email', 'orders')
+        fields = (
+            'id',
+            'first_name',
+            'last_name',
+            'email',
+            'orders'
+        )
