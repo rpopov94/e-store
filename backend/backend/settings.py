@@ -1,13 +1,15 @@
 import os
+from dotenv import load_dotenv
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+load_dotenv()
 
-SECRET_KEY = 'django-insecure-1$*8kz!jof!y&gpr8lg9hb@ge&(%uk&#o+t@zqis@ihwn0xv3%'
+SECRET_KEY = str(os.getenv('SECRET_KEY'))
 
-DEBUG = True
+DEBUG = os.getenv('DEBUG')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [str(os.getenv('ALLOWED_HOSTS'))]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -57,12 +59,24 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if not DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': str(os.getenv('NAME')),
+            'USER': str(str(os.getenv('USER'))),
+            'PASSWORD': str(os.getenv('PASSWORD')),
+            'HOST': str(os.getenv('HOST')),
+            'PORT': str(os.getenv('PORT')),
+        }
     }
-}
+else:
+    DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.sqlite3',
+                'NAME': BASE_DIR / 'db.sqlite3',
+            }
+        }
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -89,7 +103,6 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'mediafiles')
 
 MEDIA_URL = '/media/'
@@ -97,7 +110,6 @@ MEDIA_URL = '/media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'core.CustomUser'
-
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
@@ -107,8 +119,15 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
+    ],
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
     ]
 }
+
+if DEBUG:
+    REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] += \
+        ['rest_framework.renderers.BrowsableAPIRenderer']
 
 CORS_ORIGIN_WHITELIST = ('http://127.0.0.1:3000', 'http://localhost:3000')
 
