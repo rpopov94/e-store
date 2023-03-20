@@ -67,19 +67,14 @@ class UserInfoView(generics.RetrieveAPIView):
 ''' @NOTE: only user '''
 
 
-# class OrderApiRetrieweDestroyView(generics.RetrieveUpdateDestroyAPIView):
-#     permission_classes = (IsOwner,)
-#     queryset = Order.objects.all()
-#     serializer_class = serializers.OrderSerializer
-
 class OrderListView(generics.ListAPIView):
-    permission_classes = (IsOwnerOrAdmin, )
+    permission_classes = (IsOwnerOrAdmin,)
     queryset = Order.objects.all()
     serializer_class = serializers.OrderSerializer
 
 
-class OrderApiRetrieweDestroyView(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = (IsOwnerOrAdmin, )
+class OrderApiRetrieveDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (permissions.IsAdminUser,)
     queryset = Order.objects.all()
     serializer_class = serializers.OrderSerializer
     lookup_field = 'id'
