@@ -7,9 +7,9 @@ load_dotenv()
 
 SECRET_KEY = str(os.getenv('SECRET_KEY'))
 
-DEBUG = os.getenv('DEBUG')
+DEBUG = os.environ.get('DEBUG', default=0)
 
-ALLOWED_HOSTS = [str(os.getenv('ALLOWED_HOSTS'))]
+ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -59,24 +59,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
-if not DEBUG:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': str(os.getenv('NAME')),
-            'USER': str(str(os.getenv('USER'))),
-            'PASSWORD': str(os.getenv('PASSWORD')),
-            'HOST': str(os.getenv('HOST')),
-            'PORT': str(os.getenv('PORT')),
-        }
+DATABASES = {
+    "default": {
+        "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
+        "NAME": os.environ.get("SQL_DATABASE", BASE_DIR / "db.sqlite3"),
+        "USER": os.environ.get("SQL_USER", "user"),
+        "PASSWORD": os.environ.get("SQL_PASSWORD", "password"),
+        "HOST": os.environ.get("SQL_HOST", "localhost"),
+        "PORT": os.environ.get("SQL_PORT", "5432"),
     }
-else:
-    DATABASES = {
-            'default': {
-                'ENGINE': 'django.db.backends.sqlite3',
-                'NAME': BASE_DIR / 'db.sqlite3',
-            }
-        }
+}
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -101,9 +93,11 @@ USE_I18N = True
 
 USE_TZ = True
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
-MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'mediafiles')
+MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'backend/mediafiles')
+
+STATIC_ROOT = BASE_DIR / "backend/staticfiles"
 
 MEDIA_URL = '/media/'
 
