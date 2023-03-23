@@ -7,7 +7,7 @@ load_dotenv()
 
 SECRET_KEY = str(os.getenv('SECRET_KEY'))
 
-DEBUG = os.environ.get('DEBUG', default=0)
+DEBUG = os.getenv('DEBUG')
 
 ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
 
@@ -128,3 +128,7 @@ CORS_ORIGIN_WHITELIST = ('http://127.0.0.1:3000', 'http://localhost:3000')
 INTERNAL_IPS = [
     '127.0.0.1',
 ]
+
+CSRF_TRUSTED_ORIGINS = ['http://localhost:1337', 'http://127.0.0.1:1337']
+
+CSRF_COOKIE_SECURE = True
